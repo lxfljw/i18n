@@ -1,0 +1,7 @@
+{
+  "helloWorld": "你好世界",
+  "selectTime": "选择时间",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  }
+}
