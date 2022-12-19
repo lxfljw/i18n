@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
+import 'package:i18n/generated/locales.g.dart';
 
 void main() => runApp(const MyApp());
 
@@ -16,17 +17,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // locale: const Locale('zh', ''),
+      locale: const Locale('zh', ''),
+      translationsKeys: AppTranslation.translations,
       localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         AppLocalizations.delegate
       ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('zh', ''),
-      ],
+      // supportedLocales: const [
+      //   Locale('en', ''),
+      //   Locale('zh', ''),
+      // ],
       home: Home(),
     );
   }
@@ -44,6 +46,9 @@ class Home extends StatelessWidget {
           children: [
             Text(AppLocalizations.of(context)!.helloWorld),
             FloatingActionButton(
+                onPressed: c.increment,
+                child: Text(LocaleKeys.button_login.tr)),
+            FloatingActionButton(
                 child: const Icon(Icons.add), onPressed: c.increment),
             Obx(() => Text("${c.count}")),
             newMethod(context)
@@ -56,8 +61,18 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text('选择语言'),
-              ElevatedButton(onPressed: () {}, child: const Text('简体中文')),
-              ElevatedButton(onPressed: () {}, child: const Text('英语')),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.updateLocale(const Locale('zh', 'CH'));
+                    Get.back();
+                  },
+                  child: const Text('简体中文')),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.updateLocale(const Locale('en', 'US'));
+                    Get.back();
+                  },
+                  child: const Text('英语')),
             ],
           ),
         ),
